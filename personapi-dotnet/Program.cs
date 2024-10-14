@@ -26,4 +26,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+// Escuchar en el puerto 80 y todas las interfaces
+app.Urls.Add("http://0.0.0.0:80");
+
 app.Run();
