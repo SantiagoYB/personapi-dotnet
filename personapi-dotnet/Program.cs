@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Registrar CORS
+// Registrar CORS pare algo de errores 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
