@@ -1,6 +1,4 @@
-﻿version: '3.4'
-
-services:
+﻿services:
   webapi:
     image: personapi-dotnet
     build:
@@ -10,14 +8,32 @@ services:
       - "8081:80"
     depends_on:
       - db
+    networks:
+      - my_network
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=db;Database=persona_db;User=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True
+      - ConnectionStrings__DefaultConnection=Server=db;Database=persona_db;User Id=sa;Password=TuNuevaContraseña123!;TrustServerCertificate=True
 
   db:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=YourStrong@Passw0rd
+    container_name: db
     ports:
       - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=TuNuevaContraseña123!
+    volumes:
+      - mssql_data:/var/opt/mssql
+      - ./init.sql:/usr/src/app/init.sql
+      - ./entrypoint.sh:/usr/src/app/entrypoint.sh
+    networks:
+      - my_network
+    user: root
+    entrypoint: /bin/bash -c "apt-get update && apt-get install -y mssql-tools unixodbc-dev && /usr/src/app/entrypoint.sh"
+
+networks:
+  my_network:
+    driver: bridge
+
+volumes:
+  mssql_data:
