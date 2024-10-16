@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Registrar CORS pare algo de errores 
+// Registrar CORS pare algo de errores de CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -47,7 +47,7 @@ app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Persona API V1");
-    c.RoutePrefix = string.Empty; // Serve Swagger UI at the app's root
+    c.RoutePrefix = string.Empty; // Serve Swagger UI at the app's root pruebaa
 });
 
 // Aplicar CORS

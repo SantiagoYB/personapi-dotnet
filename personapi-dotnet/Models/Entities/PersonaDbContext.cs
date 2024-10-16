@@ -99,12 +99,20 @@ namespace personapi_dotnet.Models.Entities
                     .HasMaxLength(15)
                     .IsUnicode(false)
                     .HasColumnName("num");
-                entity.Property(e => e.Dueno).HasColumnName("dueno");
+                entity.Property(e => e.Dueno).HasColumnName("duenio");
                 entity.Property(e => e.Oper)
                     .HasMaxLength(45)
                     .IsUnicode(false)
                     .HasColumnName("oper");
+
+                // Configurar la relación con Persona
+                entity.HasOne<Persona>()
+                    .WithMany(p => p.Telefonos)
+                    .HasForeignKey(t => t.Dueno)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("telefono_persona_fk");
             });
+
 
             OnModelCreatingPartial(modelBuilder);
         }
