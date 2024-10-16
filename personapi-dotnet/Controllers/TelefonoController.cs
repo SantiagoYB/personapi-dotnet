@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using personapi_dotnet.Models.Entities;
 using personapi_dotnet.Repository;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace personapi_dotnet.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class TelefonoController : ControllerBase
     {
@@ -20,7 +17,7 @@ namespace personapi_dotnet.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Telefono>>> GetAllTelefonos()
         {
-            var telefonos = await _telefonoRepository.GetAllTelefonosAsync();
+            var telefonos = await _telefonoRepository.GetAllAsync();
             return Ok(telefonos);
         }
 

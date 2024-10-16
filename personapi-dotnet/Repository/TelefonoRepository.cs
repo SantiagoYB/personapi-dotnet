@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using personapi_dotnet.Models.Entities;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace personapi_dotnet.Repository
 {
@@ -14,7 +12,7 @@ namespace personapi_dotnet.Repository
             _context = context;
         }
 
-        public async Task<IEnumerable<Telefono>> GetAllTelefonosAsync()
+        public async Task<IEnumerable<Telefono>> GetAllAsync()
         {
             return await _context.Telefonos.ToListAsync();
         }

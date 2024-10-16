@@ -11,12 +11,11 @@ namespace personapi_dotnet.Models.Entities
 
         public virtual DbSet<Estudio> Estudios { get; set; }
         public virtual DbSet<Persona> Personas { get; set; }
-        public virtual DbSet<Profesion> Profesions { get; set; }
+        public virtual DbSet<Profesion> Profesiones { get; set; }
         public virtual DbSet<Telefono> Telefonos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // Si no se ha configurado la cadena de conexión, puedes agregarla aquí para debugging
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseSqlServer("Server=db;Database=persona_db;User Id=nuevo_usuario;Password=TuContraseñaFuerte;TrustServerCertificate=True");
@@ -99,13 +98,12 @@ namespace personapi_dotnet.Models.Entities
                     .HasMaxLength(15)
                     .IsUnicode(false)
                     .HasColumnName("num");
-                entity.Property(e => e.Dueno).HasColumnName("duenio");
+                entity.Property(e => e.Dueno)
+                    .HasColumnName("duenio");
                 entity.Property(e => e.Oper)
                     .HasMaxLength(45)
                     .IsUnicode(false)
                     .HasColumnName("oper");
-
-                // Configurar la relación con Persona
                 entity.HasOne<Persona>()
                     .WithMany(p => p.Telefonos)
                     .HasForeignKey(t => t.Dueno)
