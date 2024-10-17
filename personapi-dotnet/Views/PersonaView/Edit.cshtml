@@ -1,0 +1,50 @@
+﻿@model personapi_dotnet.Models.Entities.Persona
+
+@{
+    ViewData["Title"] = "Editar Persona";
+}
+
+<h2>Editar Persona</h2>
+
+<form asp-action="Edit" method="post">
+    <div class="form-group">
+        <label for="Cc">Cédula (CC)</label>
+        <input type="number" asp-for="Cc" class="form-control" id="Cc" readonly />
+        <span asp-validation-for="Cc" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Nombre">Nombre</label>
+        <input type="text" asp-for="Nombre" class="form-control" id="Nombre" required />
+        <span asp-validation-for="Nombre" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Apellido">Apellido</label>
+        <input type="text" asp-for="Apellido" class="form-control" id="Apellido" required />
+        <span asp-validation-for="Apellido" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Edad">Edad</label>
+        <input type="number" asp-for="Edad" class="form-control" id="Edad" />
+        <span asp-validation-for="Edad" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Genero">Género</label>
+        <select asp-for="Genero" class="form-control" id="Genero">
+            <option value="">Selecciona el género</option>
+            <option value="M">Masculino</option>
+            <option value="F">Femenino</option>
+            <option value="O">Otro</option>
+        </select>
+        <span asp-validation-for="Genero" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Guardar Cambios</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
