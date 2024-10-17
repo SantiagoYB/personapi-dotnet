@@ -4,8 +4,8 @@ namespace personapi_dotnet.Repository
 {
     public interface IPersonaRepository
     {
-        Task<Persona> GetPersonaByIdAsync(int cc);
         Task<IEnumerable<Persona>> GetAllAsync();
+        Task<Persona> GetPersonaByIdAsync(int cc);
         Task AddPersonaAsync(Persona persona);
         Task UpdatePersonaAsync(Persona persona);
         Task DeletePersonaAsync(int cc);

@@ -32,6 +32,9 @@ builder.Services.AddDbContext<PersonaDbContext>(options =>
 
 // Registrar el repositorio y la interfaz
 builder.Services.AddScoped<ITelefonoRepository, TelefonoRepository>();
+builder.Services.AddScoped<IPersonaRepository, PersonaRepository>();
+builder.Services.AddScoped<IEstudiosRepository, EstudiosRepository>();
+builder.Services.AddScoped<IProfesionRepository, ProfesionRepository>();
 
 // Agregar Swagger
 builder.Services.AddEndpointsApiExplorer();

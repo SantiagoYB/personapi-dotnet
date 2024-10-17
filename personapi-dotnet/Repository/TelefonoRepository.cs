@@ -17,26 +17,26 @@ namespace personapi_dotnet.Repository
             return await _context.Telefonos.ToListAsync();
         }
 
-        public async Task<Telefono> GetTelefonoByIdAsync(int dueno)
+        public async Task<Telefono?> GetTelefonoByNumberAsync(string numero)
         {
-            return await _context.Telefonos.FirstOrDefaultAsync(t => t.Dueno == dueno);
+            return await _context.Telefonos.FirstOrDefaultAsync(t => t.Num == numero);
         }
 
         public async Task AddTelefonoAsync(Telefono telefono)
         {
-            _context.Telefonos.Add(telefono);
+            await _context.Telefonos.AddAsync(telefono);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateTelefonoAsync(Telefono telefono)
         {
-            _context.Entry(telefono).State = EntityState.Modified;
+            _context.Telefonos.Update(telefono);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteTelefonoAsync(int dueno)
+        public async Task DeleteTelefonoAsync(string numero)
         {
-            var telefono = await _context.Telefonos.FirstOrDefaultAsync(t => t.Dueno == dueno);
+            var telefono = await _context.Telefonos.FirstOrDefaultAsync(t => t.Num == numero);
             if (telefono != null)
             {
                 _context.Telefonos.Remove(telefono);

@@ -104,13 +104,13 @@ namespace personapi_dotnet.Models.Entities
                     .HasMaxLength(45)
                     .IsUnicode(false)
                     .HasColumnName("oper");
+
                 entity.HasOne<Persona>()
                     .WithMany(p => p.Telefonos)
                     .HasForeignKey(t => t.Dueno)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("telefono_persona_fk");
             });
-
 
             OnModelCreatingPartial(modelBuilder);
         }
