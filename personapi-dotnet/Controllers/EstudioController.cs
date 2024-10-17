@@ -49,11 +49,6 @@ namespace personapi_dotnet.Controllers
         [HttpPut("{ccPer}/{idProf}")]
         public async Task<ActionResult> UpdateEstudio(int ccPer, int idProf, [FromBody] Estudio estudio)
         {
-            if (ccPer != estudio.CcPer || idProf != estudio.IdProf)
-            {
-                return BadRequest("Mismatched identifiers.");
-            }
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

@@ -49,11 +49,6 @@ namespace personapi_dotnet.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateProfesion(int id, [FromBody] Profesion profesion)
         {
-            if (id != profesion.Id)
-            {
-                return BadRequest("");
-            }
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

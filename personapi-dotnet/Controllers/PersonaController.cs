@@ -12,53 +12,61 @@ namespace personapi_dotnet.Controllers
 
         public PersonaController(IPersonaRepository personaRepository)
         {
-            _personaRepository = _personaRepository;
+            _personaRepository = personaRepository;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Persona>>> GetAll()
+        public async Task<ActionResult<IEnumerable<Persona>>> GetAllPersonas()
         {
             var personas = await _personaRepository.GetAllAsync();
             return Ok(personas);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Persona>> GetById(int id)
+        [HttpGet("{cc}")]
+        public async Task<ActionResult<Persona>> GetPersonaById(int cc)
+        {
+            var persona = await _personaRepository.GetPersonaByIdAsync(cc);
+            if (persona == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(persona);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddPersona([FromBody] Persona persona)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await _personaRepository.AddPersonaAsync(persona);
+            return CreatedAtAction(nameof(GetPersonaById), new { cc = persona.Cc }, persona);
+        }
+
+        [HttpPut("{cc}")]
+        public async Task<ActionResult> UpdatePersona(int cc, [FromBody] Persona persona)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await _personaRepository.UpdatePersonaAsync(persona);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeletePersona(int id)
         {
             var persona = await _personaRepository.GetPersonaByIdAsync(id);
             if (persona == null)
             {
                 return NotFound();
             }
-            return Ok(persona);
-        }
 
-        [HttpPost]
-        public async Task<ActionResult> Create(int cc, string nombre, string apellido, string genero, int edad)
-        {
-            var persona = new Persona
-            {
-                Cc = cc,
-                Nombre = nombre,
-                Apellido = apellido,
-                Genero = genero,
-                Edad = edad,
-            };
-            await _personaRepository.AddPersonaAsync(persona);
-            return Ok(persona);
-        }
-
-        [HttpPut("{id}")]
-        public async Task<ActionResult> UpdatePersona(int id, [FromBody] Persona persona)
-        {
-            var personaUpdate = await _personaRepository.GetPersonaByIdAsync(id);
-            await _personaRepository.UpdatePersonaAsync(personaUpdate);
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
-        {
             await _personaRepository.DeletePersonaAsync(id);
             return NoContent();
         }
