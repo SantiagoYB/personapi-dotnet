@@ -16,7 +16,9 @@ public partial class Persona
 
     public int? Edad { get; set; }
 
+    [JsonIgnore]
     public virtual ICollection<Estudio> Estudios { get; set; } = new List<Estudio>();
 
+    [JsonIgnore]
     public virtual ICollection<Telefono> Telefonos { get; set; } = new List<Telefono>();
 }
