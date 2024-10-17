@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using personapi_dotnet.Models.Entities;
 using personapi_dotnet.Repository;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace personapi_dotnet.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PersonaController : Controller
+    public class PersonaController : ControllerBase
     {
         private readonly IPersonaRepository _personaRepository;
 
@@ -17,14 +16,14 @@ namespace personapi_dotnet.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<ActionResult<IEnumerable<Persona>>> GetAll()
         {
             var personas = await _personaRepository.GetAllAsync();
             return Ok(personas);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<ActionResult<Persona>> GetById(int id)
         {
             var persona = await _personaRepository.GetPersonaByIdAsync(id);
             if (persona == null)
@@ -35,7 +34,7 @@ namespace personapi_dotnet.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(int cc, string nombre, string apellido, string genero, int edad)
+        public async Task<ActionResult> Create(int cc, string nombre, string apellido, string genero, int edad)
         {
             var persona = new Persona
             {
@@ -58,7 +57,7 @@ namespace personapi_dotnet.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             await _personaRepository.DeletePersonaAsync(id);
             return NoContent();
