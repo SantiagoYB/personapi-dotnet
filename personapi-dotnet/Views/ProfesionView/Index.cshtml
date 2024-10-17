@@ -1,0 +1,35 @@
+﻿@model IEnumerable<personapi_dotnet.Models.Entities.Profesion>
+
+@{
+    ViewData["Title"] = "Profesiones";
+}
+
+<h2>Lista de Profesiones</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var profesion in Model)
+        {
+            <tr>
+                <td>@profesion.Id</td>
+                <td>@profesion.Nom</td>
+                <td>@profesion.Des</td>
+                <td>
+                    <a href="http://localhost:8081/ProfesionView/Info/@profesion.Id" class="btn btn-secondary">Ver info</a>
+                    <a href="http://localhost:8081/ProfesionView/Edit/@profesion.Id" class="btn btn-primary">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@profesion.Id" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="http://localhost:8081/ProfesionView/Create" class="btn btn-primary">Crear profesion</a>

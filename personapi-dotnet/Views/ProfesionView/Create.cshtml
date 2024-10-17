@@ -1,0 +1,33 @@
+﻿@model personapi_dotnet.Models.Entities.Profesion
+
+@{
+    ViewData["Title"] = "Crear Profesión";
+}
+
+<h2>Crear Profesión</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="Id">ID</label>
+        <input type="number" asp-for="Id" class="form-control" id="Id" required />
+        <span asp-validation-for="Id" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Nom">Nombre</label>
+        <input type="text" asp-for="Nom" class="form-control" id="Nom" required />
+        <span asp-validation-for="Nom" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Des">Descripción</label>
+        <textarea asp-for="Des" class="form-control" id="Des" required></textarea>
+        <span asp-validation-for="Des" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Crear</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
