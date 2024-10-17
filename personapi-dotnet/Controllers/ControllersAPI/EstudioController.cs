@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using personapi_dotnet.Models.Entities;
 using personapi_dotnet.Repository;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace personapi_dotnet.Controllers
 {
@@ -9,10 +10,14 @@ namespace personapi_dotnet.Controllers
     public class EstudioController : ControllerBase
     {
         private readonly IEstudiosRepository _estudiosRepository;
+        private readonly IPersonaRepository _personaRepository;
+        private readonly IProfesionRepository _profesionRepository;
 
-        public EstudioController(IEstudiosRepository estudiosRepository)
+        public EstudioController(IEstudiosRepository estudiosRepository, IPersonaRepository personaRepository, IProfesionRepository profesionRepository)
         {
             _estudiosRepository = estudiosRepository;
+            _personaRepository = personaRepository;
+            _profesionRepository = profesionRepository;
         }
 
         [HttpGet]
@@ -35,25 +40,25 @@ namespace personapi_dotnet.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddEstudio([FromBody] Estudio estudio)
+        public async Task<ActionResult> AddEstudio(int profesion, int cedula, DateOnly date, string universidad)
         {
-            if (!ModelState.IsValid)
+            var newEstudio = new Estudio
             {
-                return BadRequest(ModelState);
-            }
+                IdProf = profesion,
+                CcPer = cedula,
+                Fecha = date,
+                Univer = universidad,
+                CcPerNavigation = await _personaRepository.GetPersonaByIdAsync(cedula),
+                IdProfNavigation = await _profesionRepository.GetProfesionByIdAsync(profesion)
+            };
 
-            await _estudiosRepository.AddEstudioAsync(estudio);
-            return CreatedAtAction(nameof(GetEstudioById), new { ccPer = estudio.CcPer, idProf = estudio.IdProf }, estudio);
+            await _estudiosRepository.AddEstudioAsync(newEstudio);
+            return CreatedAtAction(nameof(GetEstudioById), new { ccPer = newEstudio.CcPer, idProf = newEstudio.IdProf }, newEstudio);
         }
 
         [HttpPut("{ccPer}/{idProf}")]
         public async Task<ActionResult> UpdateEstudio(int ccPer, int idProf, [FromBody] Estudio estudio)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             await _estudiosRepository.UpdateEstudioAsync(estudio);
             return NoContent();
         }

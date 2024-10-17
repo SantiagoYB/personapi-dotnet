@@ -37,11 +37,6 @@ namespace personapi_dotnet.Controllers
         [HttpPost]
         public async Task<ActionResult> AddPersona([FromBody] Persona persona)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             await _personaRepository.AddPersonaAsync(persona);
             return CreatedAtAction(nameof(GetPersonaById), new { cc = persona.Cc }, persona);
         }
@@ -49,11 +44,6 @@ namespace personapi_dotnet.Controllers
         [HttpPut("{cc}")]
         public async Task<ActionResult> UpdatePersona(int cc, [FromBody] Persona persona)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             await _personaRepository.UpdatePersonaAsync(persona);
             return NoContent();
         }

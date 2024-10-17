@@ -37,11 +37,6 @@ namespace personapi_dotnet.Controllers
         [HttpPost]
         public async Task<ActionResult> AddProfesion([FromBody] Profesion profesion)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             await _profesionRepository.AddProfesionAsync(profesion);
             return CreatedAtAction(nameof(GetProfesionById), new { id = profesion.Id }, profesion);
         }
@@ -49,11 +44,6 @@ namespace personapi_dotnet.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateProfesion(int id, [FromBody] Profesion profesion)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             await _profesionRepository.UpdateProfesionAsync(profesion);
             return NoContent();
         }

@@ -8,10 +8,13 @@ namespace personapi_dotnet.Controllers
     public class TelefonoController : ControllerBase
     {
         private readonly ITelefonoRepository _telefonoRepository;
+        private readonly IPersonaRepository _personaRepository;
 
-        public TelefonoController(ITelefonoRepository telefonoRepository)
+        public TelefonoController(ITelefonoRepository telefonoRepository, IPersonaRepository personaRepository)
         {
             _telefonoRepository = telefonoRepository;
+            _personaRepository = personaRepository;
+            
         }
 
         [HttpGet]
@@ -34,30 +37,23 @@ namespace personapi_dotnet.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddTelefono([FromBody] Telefono telefono)
+        public async Task<ActionResult> AddTelefono(string numero, string operador, int duenio)
         {
-            if (!ModelState.IsValid)
+            var newTelf = new Telefono
             {
-                return BadRequest(ModelState);
-            }
+                Num = numero,
+                Oper = operador,
+                Dueno = duenio,
+                DuenoNavigation = await _personaRepository.GetPersonaByIdAsync(duenio)
+            };
 
-            await _telefonoRepository.AddTelefonoAsync(telefono);
-            return CreatedAtAction(nameof(GetTelefonoByDueno), new { dueno = telefono.Dueno }, telefono);
+            await _telefonoRepository.AddTelefonoAsync(newTelf);
+            return CreatedAtAction(nameof(GetTelefonoByDueno), new { dueno = newTelf.Dueno }, newTelf);
         }
 
         [HttpPut("{dueno}")]
         public async Task<ActionResult> UpdateTelefono(int dueno, [FromBody] Telefono telefono)
         {
-            if (dueno != telefono.Dueno)
-            {
-                return BadRequest("El ID del dueño no coincide con el del teléfono.");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             await _telefonoRepository.UpdateTelefonoAsync(telefono);
             return NoContent();
         }
