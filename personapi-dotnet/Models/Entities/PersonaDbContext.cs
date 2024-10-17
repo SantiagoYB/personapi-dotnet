@@ -105,7 +105,7 @@ namespace personapi_dotnet.Models.Entities
                     .IsUnicode(false)
                     .HasColumnName("oper");
 
-                entity.HasOne<Persona>()
+                entity.HasOne(t => t.DuenoNavigation)
                     .WithMany(p => p.Telefonos)
                     .HasForeignKey(t => t.Dueno)
                     .OnDelete(DeleteBehavior.ClientSetNull)

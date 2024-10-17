@@ -14,9 +14,7 @@ public partial class Estudio
 
     public string? Univer { get; set; }
 
-    [JsonIgnore]
     public virtual Persona CcPerNavigation { get; set; } = null!;
 
-    [JsonIgnore]
     public virtual Profesion IdProfNavigation { get; set; } = null!;
 }

@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Controllers\ControllersAPI\" />
     <Folder Include="Models\Entities" />
   </ItemGroup>
 
