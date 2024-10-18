@@ -1,0 +1,35 @@
+﻿@model IEnumerable<personapi_dotnet.Models.Entities.Telefono>
+
+@{
+    ViewData["Title"] = "Teléfonos";
+}
+
+<h2>Lista de Teléfonos</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Número</th>
+            <th>Operador</th>
+            <th>Dueño</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var telefono in Model)
+        {
+            <tr>
+                <td>@telefono.Num</td>
+                <td>@telefono.Oper</td>
+                <td>@telefono.Dueno</td>
+                <td>
+                    <a href="http://localhost:8081/TelefonoView/Info/@telefono.Num" class="btn btn-secondary">Ver info</a>
+                    <a href="http://localhost:8081/TelefonoView/Edit/@telefono.Num" class="btn btn-primary">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@telefono.Num" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+     </tbody>
+</table>
+
+<a href="http://localhost:8081/TelefonoView/Create" class="btn btn-primary">Crear Telefono</a>

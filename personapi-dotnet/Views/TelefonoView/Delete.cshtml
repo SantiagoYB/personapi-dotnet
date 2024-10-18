@@ -1,0 +1,30 @@
+﻿@model personapi_dotnet.Models.Entities.Telefono
+
+@{
+    ViewData["Title"] = "Eliminar Teléfono";
+}
+
+<h2>Eliminar Teléfono</h2>
+
+<h3>¿Estás seguro que deseas eliminar este teléfono?</h3>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">Número</dt>
+        <dd class="col-sm-10">@Model.Num</dd>
+
+        <dt class="col-sm-2">Operador</dt>
+        <dd class="col-sm-10">@Model.Oper</dd>
+
+        <dt class="col-sm-2">Dueño (ID)</dt>
+        <dd class="col-sm-10">@Model.Dueno</dd>
+    </dl>
+</div>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <!-- Campo oculto para pasar el número del teléfono -->
+    <input type="hidden" asp-for="Num" />
+
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using personapi_dotnet.Models.Entities;
 using personapi_dotnet.Repository;
 
 namespace personapi_dotnet.Controllers
