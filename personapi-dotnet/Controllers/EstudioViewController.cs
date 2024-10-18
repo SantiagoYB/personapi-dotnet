@@ -7,10 +7,14 @@ namespace personapi_dotnet.Controllers
     public class EstudioViewController : Controller
     {
         private readonly IEstudiosRepository _estudioRepository;
+        private readonly IPersonaRepository _personaRepository;
+        private readonly IProfesionRepository _profesionRepository;
 
-        public EstudioViewController(IEstudiosRepository estudioRepository)
+        public EstudioViewController(IEstudiosRepository estudioRepository, IPersonaRepository personaRepository, IProfesionRepository profesionRepository)
         {
             _estudioRepository = estudioRepository;
+            _personaRepository = personaRepository;  // Asegúrate de inicializarlo
+            _profesionRepository = profesionRepository;  // Asegúrate de inicializarlo
         }
 
         // Lista de todos los estudios
@@ -87,10 +91,42 @@ namespace personapi_dotnet.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Validar si CcPer tiene un valor válido
+                if (estudio.CcPer == 0)
+                {
+                    ModelState.AddModelError("", "El campo Cédula de Persona es requerido.");
+                    return View(estudio);
+                }
+
+                // Buscar la persona basada en el identificador
+                estudio.CcPerNavigation = await _personaRepository.GetPersonaByIdAsync(estudio.CcPer);
+
+                // Validar que se encontró la entidad relacionada
+                if (estudio.CcPerNavigation == null)
+                {
+                    ModelState.AddModelError("", "La persona no fue encontrada.");
+                    return View(estudio);
+                }
+
+                // Buscar la profesión de la misma manera
+                estudio.IdProfNavigation = await _profesionRepository.GetProfesionByIdAsync(estudio.IdProf);
+                if (estudio.IdProfNavigation == null)
+                {
+                    ModelState.AddModelError("", "La profesión no fue encontrada.");
+                    return View(estudio);
+                }
+
+                // Si todo es válido, guardar el estudio
                 await _estudioRepository.AddEstudioAsync(estudio);
                 return RedirectToAction(nameof(Index));
             }
+
+            // Si hay algún error en la validación, regresar la vista con los errores
             return View(estudio);
         }
+
+
+
+
     }
 }
