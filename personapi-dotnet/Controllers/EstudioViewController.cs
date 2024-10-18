@@ -60,6 +60,7 @@ namespace personapi_dotnet.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
         // Eliminar un estudio
         // /estudioView/Delete?ccPer={ccPer}&idProf={idProf}
         public async Task<IActionResult> Delete(int ccPer, int idProf)
