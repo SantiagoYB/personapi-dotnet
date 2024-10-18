@@ -5,7 +5,7 @@ using personapi_dotnet.Repository;
 
 namespace personapi_dotnet.Controllers
 {
-    public class TelefonoViewController:Controller
+    public class TelefonoViewController : Controller
     {
         private readonly ITelefonoRepository _telefonoRepository;
 
@@ -31,19 +31,15 @@ namespace personapi_dotnet.Controllers
         }
 
         // Acción GET para editar un teléfono
-        public async Task<IActionResult> Edit(string numero)
+        public async Task<IActionResult> Edit(int? id)
         {
-            var telefono = await _telefonoRepository.GetTelefonoByNumberAsync(numero);
-            if (telefono == null)
-            {
-                return NotFound();
-            }
+            var telefono = await _telefonoRepository.GetTelefonoByNumberAsync(id.Value.ToString());
             return View(telefono);
         }
 
         // Acción POST para editar un teléfono
         [HttpPost]
-        public async Task<IActionResult> Edit(string numero,Telefono telefono)
+        public async Task<IActionResult> Edit(Telefono telefono)
         {
             if (!ModelState.IsValid)
             {
@@ -55,21 +51,20 @@ namespace personapi_dotnet.Controllers
         }
 
 
-        //Eliminar unn telefono
-        // /telefonoView/Delete?id={id}
-        public async Task<IActionResult> Delete(string numero)
+        // Acción GET para mostrar la vista de confirmación de eliminación
+        public async Task<IActionResult> Delete(int id)
         {
-            var telefono = await _telefonoRepository.GetTelefonoByNumberAsync(numero);
+            var telefono = await _telefonoRepository.GetTelefonoByNumberAsync(id.ToString());
             return View(telefono);
         }
 
+        // Acción POST para confirmar la eliminación
         [HttpPost]
-        public async Task<IActionResult> DeleteConfirmed(string numero)
+        public async Task<IActionResult> DeleteConfirmed(int num)
         {
-            await _telefonoRepository.DeleteTelefonoAsync(numero);
+            await _telefonoRepository.DeleteTelefonoAsync(num.ToString());
             return RedirectToAction(nameof(Index));
         }
-
 
         //Crear un telefono
         // /telefonoView/Create

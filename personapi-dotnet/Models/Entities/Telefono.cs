@@ -9,5 +9,6 @@ public partial class Telefono
     public int? Dueno { get; set; }
 
     // Propiedad de navegación para Persona
+    [JsonIgnore]
     public virtual Persona? DuenoNavigation { get; set; }
 }
