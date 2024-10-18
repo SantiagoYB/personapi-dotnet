@@ -43,7 +43,7 @@ namespace personapi_dotnet.Controllers
 
         // Acción POST para editar un teléfono
         [HttpPost]
-        public async Task<IActionResult> Edit(Telefono telefono)
+        public async Task<IActionResult> Edit(string numero,Telefono telefono)
         {
             if (!ModelState.IsValid)
             {
@@ -55,19 +55,15 @@ namespace personapi_dotnet.Controllers
         }
 
 
-        // Acción GET para mostrar la vista de confirmación de eliminación
+        //Eliminar unn telefono
+        // /telefonoView/Delete?id={id}
         public async Task<IActionResult> Delete(string numero)
         {
             var telefono = await _telefonoRepository.GetTelefonoByNumberAsync(numero);
-            if (telefono == null)
-            {
-                return NotFound();
-            }
             return View(telefono);
         }
 
-        // Acción POST para confirmar la eliminación
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(string numero)
         {
             await _telefonoRepository.DeleteTelefonoAsync(numero);

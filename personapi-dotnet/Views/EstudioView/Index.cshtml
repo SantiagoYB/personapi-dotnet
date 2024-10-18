@@ -25,9 +25,9 @@
                 <td>@estudio.Fecha</td>
                 <td>@estudio.Univer</td>
                 <td>
-                    <a href="http://localhost:8081/EstudioView/Info/@estudio.IdProf" class="btn btn-secondary"></a>
+                    <a asp-controller="EstudioView" asp-action="Info" asp-route-ccPer="@estudio.CcPer" asp-route-idProf="@estudio.IdProf" class="btn btn-secondary">Info</a>
                     <a href="http://localhost:8081/EstudioView/Edit/@estudio.IdProf" class="btn btn-primary">Editar</a>
-                    <a asp-action="Delete" asp-route-cc="@estudio.IdProf" class="btn btn-danger">Eliminar</a>
+                    <a asp-controller="EstudioView" asp-action="Delete" asp-route-ccPer="@estudio.CcPer" asp-route-idProf="@estudio.IdProf" class="btn btn-danger">Eliminar</a>
                 </td>
              </tr>
         }

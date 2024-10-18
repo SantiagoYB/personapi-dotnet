@@ -21,8 +21,8 @@ namespace personapi_dotnet.Controllers
             return View(estudios);
         }
 
-        // Info de un estudio
-        // /estudioView/Info/{ccPer}/{idProf}
+        // Acción para mostrar la información de un estudio específico
+        // /EstudioView/Info/{ccPer}/{idProf}
         public async Task<IActionResult> Info(int ccPer, int idProf)
         {
             var estudio = await _estudioRepository.GetEstudioByIdAsync(ccPer, idProf);
